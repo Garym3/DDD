@@ -3,13 +3,13 @@ using DDD.Application.Entretien.Participant.Atout;
 
 namespace DDD.Models.Entretien.Participant.Atout
 {
-    public class ExperienceParticipant
+    public class ExpérienceParticipant
     {
         public readonly Technologie NomTechnologie;
 
         public readonly int NbAnnéesExpérience;
 
-        public ExperienceParticipant(Technologie nomTechnologie, int nbAnnéesExpérience)
+        public ExpérienceParticipant(Technologie nomTechnologie, int nbAnnéesExpérience)
         {
             NomTechnologie = nomTechnologie;
             NbAnnéesExpérience = nbAnnéesExpérience;
@@ -17,7 +17,7 @@ namespace DDD.Models.Entretien.Participant.Atout
 
         public override bool Equals(object obj)
         {
-            var participant = obj as ExperienceParticipant;
+            var participant = obj as ExpérienceParticipant;
             return participant != null &&
                    NomTechnologie == participant.NomTechnologie &&
                    NbAnnéesExpérience == participant.NbAnnéesExpérience;

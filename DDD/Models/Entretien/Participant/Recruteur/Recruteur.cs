@@ -8,9 +8,9 @@ namespace DDD.Models.Entretien.Participant.Recruteur
     {
         public readonly RecruteurId RecruteurId;
         public readonly string Nom;
-        public readonly List<ExperienceParticipant> ListeExpériences;
+        public readonly List<ExpérienceParticipant> ListeExpériences;
 
-        public Recruteur(string nom, List<ExperienceParticipant> listeExpériences)
+        public Recruteur(string nom, List<ExpérienceParticipant> listeExpériences)
         {
             RecruteurId = new RecruteurId();
             Nom = nom;

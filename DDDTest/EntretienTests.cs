@@ -19,9 +19,9 @@ namespace DDDTest
     {
         private DateTime _dateTime;
         private Créneau _créneau;
-        private List<ExperienceParticipant> _expériencesCandidat;
-        private List<ExperienceParticipant> _expériencesRecruteur1;
-        private List<ExperienceParticipant> _expériencesRecruteur2;
+        private List<ExpérienceParticipant> _expériencesCandidat;
+        private List<ExpérienceParticipant> _expériencesRecruteur1;
+        private List<ExpérienceParticipant> _expériencesRecruteur2;
         private Candidat _candidat;
         private List<Recruteur> _recruteurs;
 
@@ -67,21 +67,21 @@ namespace DDDTest
         {
             _dateTime = new DateTime(2019, 04, 19, 11, 20, 01);
             _créneau = new Créneau(_dateTime, 20);
-            _expériencesCandidat = new List<ExperienceParticipant>
+            _expériencesCandidat = new List<ExpérienceParticipant>
             {
-                new ExperienceParticipant(Technologie.DotNet, 3),
-                new ExperienceParticipant(Technologie.C, 4)
+                new ExpérienceParticipant(Technologie.DotNet, 3),
+                new ExpérienceParticipant(Technologie.C, 4)
             };
-            _expériencesRecruteur1 = new List<ExperienceParticipant>
+            _expériencesRecruteur1 = new List<ExpérienceParticipant>
             {
-                new ExperienceParticipant(Technologie.DotNet, 3),
-                new ExperienceParticipant(Technologie.C, 4)
+                new ExpérienceParticipant(Technologie.DotNet, 3),
+                new ExpérienceParticipant(Technologie.C, 4)
             };
 
-            _expériencesRecruteur2 = new List<ExperienceParticipant>
+            _expériencesRecruteur2 = new List<ExpérienceParticipant>
             {
-                new ExperienceParticipant(Technologie.DotNet, 2),
-                new ExperienceParticipant(Technologie.Java, 7)
+                new ExpérienceParticipant(Technologie.DotNet, 2),
+                new ExpérienceParticipant(Technologie.Java, 7)
             };
             _candidat = new Candidat("Bob", _expériencesCandidat);
             _recruteurs = new List<Recruteur>

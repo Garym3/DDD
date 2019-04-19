@@ -8,9 +8,9 @@ namespace DDD.Models.Entretien.Participant.Candidat
     {
         public readonly CandidatId CandidatId;
         public readonly string Nom;
-        public readonly List<ExperienceParticipant> ListeExpériences;
+        public readonly List<ExpérienceParticipant> ListeExpériences;
 
-        public Candidat(string nom, List<ExperienceParticipant> listeExpériences)
+        public Candidat(string nom, List<ExpérienceParticipant> listeExpériences)
         {
             CandidatId = new CandidatId();
             Nom = nom;
