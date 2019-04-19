@@ -6,10 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Salle\" />
-    <Folder Include="Application\Entretien\Participant\Candidat\" />
-    <Folder Include="Application\Entretien\Participant\Recruteur\" />
-    <Folder Include="UseCases\" />
+    <Folder Include="Exposition\" />
   </ItemGroup>
 
 </Project>

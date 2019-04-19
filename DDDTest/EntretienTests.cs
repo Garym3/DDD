@@ -1,34 +1,49 @@
-using DDD;
 using System;
 using System.Collections.Generic;
-using DDD.Application;
-using DDD.Application.Entretien;
-using DDD.Application.Entretien.Participant.Atout;
-using DDD.Models;
-using DDD.Models.Entretien;
-using DDD.Models.Entretien.Créneau;
-using DDD.Models.Entretien.Participant.Atout;
-using DDD.Models.Entretien.Participant.Candidat;
-using DDD.Models.Entretien.Participant.Recruteur;
+using DDD.Commun.Dto;
+using DDD.Commun.Enum;
+using DDD.Commun.Exception;
+using DDD.Model.AggrégatEntretien;
+using DDD.UseCase.UseCaseEntretien;
 using Xunit;
-using Xunit.Sdk;
 
 namespace DDDTest
 {
     public class EntretienTests
     {
-        private DateTime _dateTime;
-        private Créneau _créneau;
-        private List<ExpérienceParticipant> _expériencesCandidat;
-        private List<ExpérienceParticipant> _expériencesRecruteur1;
-        private List<ExpérienceParticipant> _expériencesRecruteur2;
-        private Candidat _candidat;
-        private List<Recruteur> _recruteurs;
+        private static Entretien InitialiserEntretien(DateTime dateTime, int duréeEnMinutes)
+        {
+            var créneau = new CréneauDto(dateTime, duréeEnMinutes);
+            var expériencesCandidat = new List<ExpérienceParticipantDto>
+            {
+                new ExpérienceParticipantDto(Technologie.DotNet, 3),
+                new ExpérienceParticipantDto(Technologie.C, 4)
+            };
+            var expériencesRecruteur1 = new List<ExpérienceParticipantDto>
+            {
+                new ExpérienceParticipantDto(Technologie.DotNet, 3),
+                new ExpérienceParticipantDto(Technologie.C, 4)
+            };
+
+            var expériencesRecruteur2 = new List<ExpérienceParticipantDto>
+            {
+                new ExpérienceParticipantDto(Technologie.DotNet, 2),
+                new ExpérienceParticipantDto(Technologie.Java, 7)
+            };
+            var candidat = new CandidatDto("Bob", expériencesCandidat);
+            var recruteurs = new List<RecruteurDto>
+            {
+                new RecruteurDto("Jules", expériencesRecruteur1),
+                new RecruteurDto("Jean", expériencesRecruteur2)
+            };
+
+            return new PlanifierEntretien().Planifier(créneau, candidat, recruteurs);
+        }
 
         [Fact]
         public void DoitPlanifierEntretien()
         {
-            Entretien entretien = InitialiseEchantillonEntretien();
+            var entretien = InitialiserEntretien(new DateTime(2019, 04, 19, 11, 20, 01), 15);
 
             Assert.True(entretien.Statut == StatutEntretien.Planifié);
         }
@@ -36,7 +51,7 @@ namespace DDDTest
         [Fact]
         public void DoitConfirmerEntretien()
         {
-            Entretien entretien = InitialiseEchantillonEntretien();
+            var entretien = InitialiserEntretien(new DateTime(2019, 04, 19, 11, 20, 01), 15);
 
             entretien.Confirmer();
 
@@ -46,50 +61,35 @@ namespace DDDTest
         [Fact]
         public void DoitAnnulerEntretien()
         {
-            Entretien entretien = InitialiseEchantillonEntretien();
+            var entretien = InitialiserEntretien(new DateTime(2019, 04, 19, 11, 20, 01), 15);
 
-            entretien.Annuler("Le candidat ne sera pas disponible.");
+            entretien.Annuler("Le candidat sera absent.");
 
             Assert.True(entretien.Statut == StatutEntretien.Annulé);
         }
 
         [Fact]
-        public void DeuxEntretiensNeDoiventPasSeChevaucher()
+        public void DoitRetournerUneDuréeHorsHeuresOuvréesExceptionTest1()
         {
-            //Entretien entretien1 = InitialiseEchantillonEntretien();
-            //Entretien entretien2 = ;
-
-            //Assert.
+            Assert.Throws<DuréeHorsHeuresOuvréesException>(() => InitialiserEntretien(new DateTime(2019, 4, 20, 7, 0, 0), 0));
         }
 
-
-        private Entretien InitialiseEchantillonEntretien()
+        [Fact]
+        public void DoitRetournerUneDuréeHorsHeuresOuvréesExceptionTest2()
         {
-            _dateTime = new DateTime(2019, 04, 19, 11, 20, 01);
-            _créneau = new Créneau(_dateTime, 20);
-            _expériencesCandidat = new List<ExpérienceParticipant>
-            {
-                new ExpérienceParticipant(Technologie.DotNet, 3),
-                new ExpérienceParticipant(Technologie.C, 4)
-            };
-            _expériencesRecruteur1 = new List<ExpérienceParticipant>
-            {
-                new ExpérienceParticipant(Technologie.DotNet, 3),
-                new ExpérienceParticipant(Technologie.C, 4)
-            };
+            Assert.Throws<DuréeHorsHeuresOuvréesException>(() => InitialiserEntretien(new DateTime(2019, 4, 20, 22, 0, 0), 0));
+        }
 
-            _expériencesRecruteur2 = new List<ExpérienceParticipant>
-            {
-                new ExpérienceParticipant(Technologie.DotNet, 2),
-                new ExpérienceParticipant(Technologie.Java, 7)
-            };
-            _candidat = new Candidat("Bob", _expériencesCandidat);
-            _recruteurs = new List<Recruteur>
-            {
-                new Recruteur("Jules", _expériencesRecruteur1),
-                new Recruteur("Jean", _expériencesRecruteur2)
-            };
-            return new Entretien(_créneau, _candidat, _recruteurs);
+        [Fact]
+        public void DoitRetournerUneDuréeHorsHeuresOuvréesExceptionTest3()
+        {
+            Assert.Throws<DuréeHorsHeuresOuvréesException>(() => InitialiserEntretien(new DateTime(2019, 4, 20, 20, 0, 0), 15));
+        }
+
+        [Fact]
+        public void DoitRetournerUneDuréeHorsHeuresOuvréesExceptionTest4()
+        {
+            Assert.Throws<DuréeHorsHeuresOuvréesException>(() => InitialiserEntretien(new DateTime(2019, 4, 20, 19, 0, 0), 90));
         }
     }
 }
