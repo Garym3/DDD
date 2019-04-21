@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DDD.Commun.Dto;
+﻿using DDD.Commun.Dto;
 
 namespace DDD.Commun.Response
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DDD.Model.AggrégatSalle
+namespace DDD.Model.AggregatSalle
 {
     public class Salle
     {

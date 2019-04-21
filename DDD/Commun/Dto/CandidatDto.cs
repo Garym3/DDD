@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DDD.Model.AggrégatEntretien;
+﻿using System.Collections.Generic;
 
 namespace DDD.Commun.Dto
 {
     public class CandidatDto
     {
-        public string Nom { get; set; }
-        public List<ExpérienceParticipantDto> Expériences { get; set; }
+        public string Nom;
+        public List<ExperienceParticipantDto> Experiences;
 
-        public CandidatDto(string nom, List<ExpérienceParticipantDto> expériences)
+        public CandidatDto(string nom, List<ExperienceParticipantDto> experiences)
         {
             Nom = nom;
-            Expériences = expériences;
+            Experiences = experiences;
         }
     }
 }

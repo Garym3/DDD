@@ -2,6 +2,6 @@
 {
     public enum StatutEntretien
     {
-        Planifié, Confirmé, Annulé
+        Planifie, Confirme, Annule
     }
 }

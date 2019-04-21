@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DDD.Model.AggrégatEntretien
+namespace DDD.Model.AggregatEntretien
 {
     internal class EntretienId
     {

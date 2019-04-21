@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using DDD.Commun.Enum;
 
 namespace DDD.Commun.Dto
@@ -8,16 +6,17 @@ namespace DDD.Commun.Dto
     public class EntretienDto
     {
         public StatutEntretien Statut { get; set; }
-        public CréneauDto Créneau { get; set; }
+        public CreneauDto Creneau { get; set; }
         public CandidatDto Candidat { get; set; }
         public List<RecruteurDto> Recruteurs { get; set; }
+
         public RaisonAnnulationEntretienDto RaisonAnnulationEntretien;
 
-        public EntretienDto(RaisonAnnulationEntretienDto raisonAnnulationEntretien, StatutEntretien statut, CréneauDto créneau, CandidatDto candidat, List<RecruteurDto> recruteurs)
+        public EntretienDto(RaisonAnnulationEntretienDto raisonAnnulationEntretien, StatutEntretien statut, CreneauDto creneau, CandidatDto candidat, List<RecruteurDto> recruteurs)
         {
             RaisonAnnulationEntretien = raisonAnnulationEntretien;
             Statut = statut;
-            Créneau = créneau;
+            Creneau = creneau;
             Candidat = candidat;
             Recruteurs = recruteurs;
         }

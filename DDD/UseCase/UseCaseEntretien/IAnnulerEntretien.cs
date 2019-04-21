@@ -1,5 +1,5 @@
 ﻿using DDD.Commun.Dto;
-using DDD.Model.AggrégatEntretien;
+using DDD.Model.AggregatEntretien;
 
 namespace DDD.UseCase.UseCaseEntretien
 {

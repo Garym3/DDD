@@ -1,19 +1,19 @@
 ﻿using System;
 
-namespace DDD.Model.AggrégatEntretien
+namespace DDD.Model.AggregatSalle
 {
-    internal class CandidatId
+    public class SalleId
     {
         public readonly Guid Id;
 
-        public CandidatId()
+        public SalleId()
         {
             Id = Guid.NewGuid();
         }
 
         public override bool Equals(object obj)
         {
-            return obj is CandidatId iD && Id.Equals(iD.Id);
+            return obj is SalleId id && Id.Equals(id.Id);
         }
 
         public override int GetHashCode()

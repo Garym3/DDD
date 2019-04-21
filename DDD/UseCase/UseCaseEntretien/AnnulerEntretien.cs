@@ -1,7 +1,6 @@
 ﻿using System;
 using DDD.Commun.Dto;
-using DDD.Commun.Enum;
-using DDD.Model.AggrégatEntretien;
+using DDD.Model.AggregatEntretien;
 
 namespace DDD.UseCase.UseCaseEntretien
 {

@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using DDD.Commun.Dto;
 using DDD.Commun.Enum;
-using DDD.Commun.Exception;
-using DDD.Model.AggrégatEntretien;
+using DDD.Model.AggregatEntretien;
 using DDD.UseCase.UseCaseEntretien;
 using Xunit;
 
@@ -11,33 +10,34 @@ namespace DDDTest
 {
     public class EntretienTests
     {
-        private static Entretien InitialiserEntretien(DateTime dateTime, int duréeEnMinutes)
+        private static Entretien InitialiserEntretien(DateTime dateTime, int dureeEnMinutes)
         {
-            var créneau = new CréneauDto(dateTime, duréeEnMinutes);
-            var expériencesCandidat = new List<ExpérienceParticipantDto>
+            var creneau = new CreneauDto(dateTime, dureeEnMinutes);
+            var experiencesCandidatBob = new List<ExperienceParticipantDto>
             {
-                new ExpérienceParticipantDto(Technologie.DotNet, 3),
-                new ExpérienceParticipantDto(Technologie.C, 4)
+                new ExperienceParticipantDto(Technologie.DotNet, 3),
+                new ExperienceParticipantDto(Technologie.C, 4)
             };
-            var expériencesRecruteur1 = new List<ExpérienceParticipantDto>
+            var experiencesRecruteurJules = new List<ExperienceParticipantDto>
             {
-                new ExpérienceParticipantDto(Technologie.DotNet, 3),
-                new ExpérienceParticipantDto(Technologie.C, 4)
+                new ExperienceParticipantDto(Technologie.DotNet, 3),
+                new ExperienceParticipantDto(Technologie.C, 4)
             };
 
-            var expériencesRecruteur2 = new List<ExpérienceParticipantDto>
+            var experiencesRecruteurJean = new List<ExperienceParticipantDto>
             {
-                new ExpérienceParticipantDto(Technologie.DotNet, 2),
-                new ExpérienceParticipantDto(Technologie.Java, 7)
+                new ExperienceParticipantDto(Technologie.DotNet, 2),
+                new ExperienceParticipantDto(Technologie.Java, 7)
             };
-            var candidat = new CandidatDto("Bob", expériencesCandidat);
+
+            var candidat = new CandidatDto("Bob", experiencesCandidatBob);
             var recruteurs = new List<RecruteurDto>
             {
-                new RecruteurDto("Jules", expériencesRecruteur1),
-                new RecruteurDto("Jean", expériencesRecruteur2)
+                new RecruteurDto("Jules", experiencesRecruteurJules),
+                new RecruteurDto("Jean", experiencesRecruteurJean)
             };
 
-            return new PlanifierEntretien().Planifier(créneau, candidat, recruteurs);
+            return new PlanifierEntretien().Planifier(creneau, candidat, recruteurs);
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace DDDTest
         {
             var entretien = InitialiserEntretien(new DateTime(2019, 04, 19, 11, 20, 01), 15);
 
-            Assert.True(entretien.Statut == StatutEntretien.Planifié);
+            Assert.True(entretien.Statut == StatutEntretien.Planifie);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace DDDTest
 
             entretien.Confirmer();
 
-            Assert.True(entretien.Statut == StatutEntretien.Confirmé);
+            Assert.True(entretien.Statut == StatutEntretien.Confirme);
         }
 
         [Fact]
@@ -65,31 +65,37 @@ namespace DDDTest
 
             entretien.Annuler("Le candidat sera absent.");
 
-            Assert.True(entretien.Statut == StatutEntretien.Annulé);
+            Assert.True(entretien.Statut == StatutEntretien.Annule);
         }
 
         [Fact]
-        public void DoitRetournerUneDuréeHorsHeuresOuvréesExceptionTest1()
+        public void NeDoitPasRepasserAuStatutPlanifie()
         {
-            Assert.Throws<DuréeHorsHeuresOuvréesException>(() => InitialiserEntretien(new DateTime(2019, 4, 20, 7, 0, 0), 0));
+            var entretien = InitialiserEntretien(new DateTime(2019, 04, 19, 11, 20, 01), 15);
+
+            entretien.Annuler("Le candidat sera absent.");
+
+            Assert.True(entretien.Statut == StatutEntretien.Annule);
         }
 
         [Fact]
-        public void DoitRetournerUneDuréeHorsHeuresOuvréesExceptionTest2()
+        public void NeDoitPasRepasserAuStatutConfirme()
         {
-            Assert.Throws<DuréeHorsHeuresOuvréesException>(() => InitialiserEntretien(new DateTime(2019, 4, 20, 22, 0, 0), 0));
+            var entretien = InitialiserEntretien(new DateTime(2019, 04, 19, 11, 20, 01), 15);
+
+            entretien.Annuler("Le candidat sera absent.");
+
+            Assert.True(entretien.Statut == StatutEntretien.Annule);
         }
 
         [Fact]
-        public void DoitRetournerUneDuréeHorsHeuresOuvréesExceptionTest3()
+        public void NeDoitPasPasserAuStatutAnnule()
         {
-            Assert.Throws<DuréeHorsHeuresOuvréesException>(() => InitialiserEntretien(new DateTime(2019, 4, 20, 20, 0, 0), 15));
-        }
+            var entretien = InitialiserEntretien(new DateTime(2019, 04, 19, 11, 20, 01), 15);
 
-        [Fact]
-        public void DoitRetournerUneDuréeHorsHeuresOuvréesExceptionTest4()
-        {
-            Assert.Throws<DuréeHorsHeuresOuvréesException>(() => InitialiserEntretien(new DateTime(2019, 4, 20, 19, 0, 0), 90));
+            entretien.Annuler("Le candidat sera absent.");
+
+            Assert.True(entretien.Statut == StatutEntretien.Annule);
         }
     }
 }
